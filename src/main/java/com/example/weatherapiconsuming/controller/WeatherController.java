@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/weather")
 @RequiredArgsConstructor
 @CrossOrigin("https://weather-frontend-qxwf.onrender.com")
 public class WeatherController {
@@ -26,10 +25,6 @@ public class WeatherController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND - please check your API key")
     })
 
-    @GetMapping
-    public ResponseEntity<?> teste(){
-        return ResponseEntity.ok("ta rodando");
-    }
 
     @PostMapping
     public ResponseEntity<WeatherResponseDTO> getData(
