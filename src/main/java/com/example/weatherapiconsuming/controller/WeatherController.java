@@ -26,6 +26,11 @@ public class WeatherController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND - please check your API key")
     })
 
+    @GetMapping
+    public ResponseEntity<?> teste(){
+        return ResponseEntity.ok("ta rodando");
+    }
+
     @PostMapping
     public ResponseEntity<WeatherResponseDTO> getData(
             @Parameter(description = "City, state, country, and date range(initial date and finalDate)")
