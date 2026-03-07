@@ -7,11 +7,13 @@ spring:
   cache:
     type: redis
     redis:
-      time-to-live: 1h
-    data:
-      redis:
-        url: ${REDIS_URL}
-        client-name: cache
+      time-to-live: 10h
+  data:
+    redis:
+      client-name: cache
+      url: ${REDIS_URL}
+
 server:
+  port: ${PORT:8080}
   ssl:
-    enabled: true
+    enabled: false
