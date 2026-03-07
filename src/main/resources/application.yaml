@@ -12,6 +12,6 @@ spring:
       redis:
         url: ${REDIS_URL}
         client-name: cache
-        ssl:
-          enabled: true
-
+server:
+  ssl:
+    enabled: true
