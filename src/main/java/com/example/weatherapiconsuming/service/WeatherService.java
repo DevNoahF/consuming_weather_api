@@ -17,9 +17,7 @@ public class WeatherService {
     private final WeatherFormatterUrl weatherFormatterUrl;
     private final ObjectMapper objectMapper;
 
-    // 'value' é o nome do "balde" no Redis
-    // 'key' define como identificar cada busca (ex: pelo nome da cidade)
-    @Cacheable(value = "weather", key = "#dto")
+
     public WeatherResponseDTO getWeatherApi(WeatherRequestDTO dto) {
         var apiResponse = weatherFormatterUrl.formatUrl(dto);
         try {
