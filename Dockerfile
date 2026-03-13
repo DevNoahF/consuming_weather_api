@@ -1,26 +1,37 @@
-# Stage 1: Build
-FROM eclipse-temurin:25-jdk-alpine AS builder
-WORKDIR /build
+# ---------- STAGE 1: BUILD ----------
+FROM eclipse-temurin:21-jdk-alpine AS builder
 
-# Copiar arquivos de configuração Maven
-COPY pom.xml .
+WORKDIR /app
+
+# Copiar wrapper do Maven
 COPY mvnw .
 COPY .mvn .mvn
+COPY pom.xml .
+
+# Baixar dependências primeiro (melhora cache)
+RUN chmod +x mvnw
+RUN ./mvnw dependency:go-offline
+
 # Copiar código fonte
 COPY src src
 
-# Compilar a aplicação
-RUN chmod +x mvnw && ./mvnw clean package -DskipTests
+# Gerar o JAR
+RUN ./mvnw clean package -DskipTests
 
-# Stage 2: Runtime
-FROM eclipse-temurin:25-jre-alpine
+
+# ---------- STAGE 2: RUNTIME ----------
+FROM eclipse-temurin:21-jre-alpine
+
 WORKDIR /app
 
-# Copiar o JAR compilado do stage anterior
-COPY --from=builder /build/target/*.jar app.jar
+# Copiar JAR gerado
+COPY --from=builder /app/target/*.jar app.jar
 
-# Expor porta do Spring Boot
+# Porta usada pelo Spring
 EXPOSE 8080
 
-# Iniciar a aplicação
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Variáveis recomendadas para container
+ENV JAVA_OPTS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75"
+
+# Iniciar aplicação
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]
