@@ -2,6 +2,7 @@
 
 Uma aplicação Spring Boot que consome dados meteorológicos em tempo real através de integração com APIs de clima. Utilizando REDIS para cache.
 
+# Esse projeto é para ser feito deploy no reder, sem a implementação do redis.
 
 ## Requisitos
 

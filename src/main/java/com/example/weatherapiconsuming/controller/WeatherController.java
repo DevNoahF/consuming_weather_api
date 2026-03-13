@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin("https://weather-frontend-qxwf.onrender.com")
 public class WeatherController {
     private final WeatherService weatherService;
 
