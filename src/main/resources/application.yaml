@@ -5,9 +5,6 @@ server:
 spring:
   application:
     name: WeatherApiConsuming
-
-weather:
-  apiKey: ${API_KEY}
-
-cors:
-  allowed-origins: "https://weather-frontend-qxwf.onrender.com"
+    ApiKey: ${API_KEY}
+    cors:
+      allowed-origins: "https://weather-frontend-qxwf.onrender.com"
