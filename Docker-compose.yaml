@@ -3,34 +3,8 @@ services:
     container_name: weatherApiContainer
     build: .
     ports:
-      - "8080"
+      - "8080:8080"
     environment:
       - API_KEY=${API_KEY}
-    networks:
-      - weather-network
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/actuator/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 5s
-
-  nginx:
-    container_name: weatherNginxContainer
-    image: nginx:alpine
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./ssl:/etc/nginx/ssl:ro
-    depends_on:
-      - app
-    networks:
-      - weather-network
     restart: unless-stopped
 
-networks:
-  weather-network:
-    driver: bridge
