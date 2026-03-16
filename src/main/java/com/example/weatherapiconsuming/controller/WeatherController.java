@@ -37,5 +37,10 @@ public class WeatherController {
         }
     }
 
+    @GetMapping
+    public ResponseEntity<String> getHealth(){
+        return  ResponseEntity.status(HttpStatus.OK).build();
+    }
+
 
 }
