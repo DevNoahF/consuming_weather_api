@@ -1,15 +1,13 @@
 # Weather API Consuming
 
-Uma aplicação Spring Boot que consome dados meteorológicos em tempo real através de integração com APIs de clima. Utilizando REDIS para cache.
-
-# Esse projeto é para ser feito deploy no reder, sem a implementação do redis.
+Uma aplicação Spring Boot que consome dados meteorológicos em tempo real através de integração com APIs de clima.
 
 ## Requisitos
 
-- Docker (para rodar a aplicação)
+- Docker & Docker Compose (para rodar a aplicação em containers)
 - API KEY do site: https://www.visualcrossing.com/weather-api/
 
-## Como Rodar
+## Como Rodar com Docker
 
 ### 1. Clone o repositório
 
@@ -20,35 +18,72 @@ cd WeatherApiConsuming
 
 ### 2. Configure a chave da API
 
-## Obtendo a Chave da API
+Copie o arquivo `.env.example` para `.env`:
 
-1. Acesse : https://www.visualcrossing.com/weather-api/
-2. Registre-se e obtenha sua chave de API
-3. Adicione a chave no arquivo `application.yaml`
-
-
-Adicione sua chave de API no arquivo `application.yaml`:
-
-```yaml
-# Adicionar sua chave da API Weather
-weather:
-  api:
-    key: sua_chave_aqui
+```bash
+cp .env.example .env
 ```
 
+Edite o arquivo `.env` e adicione sua chave de API:
 
-### 4. Acesse a documentação da API
+```env
+API_KEY=sua_chave_aqui_do_visualcrossing
+```
 
-Abra em seu navegador:
+### 3. Obtenha a Chave da API
+
+1. Acesse: https://www.visualcrossing.com/weather-api/
+2. Registre-se e obtenha sua chave de API
+3. Adicione a chave no arquivo `.env`
+
+### 4. Execute a aplicação com Docker Compose
+
+```bash
+docker-compose up -d
+```
+
+A aplicação estará disponível em:
+```
+http://localhost:8080
+```
+
+### 5. Acesse a documentação da API (Swagger)
 
 ```
 http://localhost:8080/swagger-ui.html
 ```
 
+## Comandos Úteis
 
-## Usando Docker
-
+Visualizar logs:
 ```bash
+docker-compose logs -f app
+```
+
+Parar a aplicação:
+```bash
+docker-compose down
+```
+
+Recompilar e executar:
+```bash
+docker-compose up --build
+```
+
+## Endpoints Principais
+
+- `GET /swagger-ui.html` - Documentação interativa da API
+- `GET /actuator/health` - Health check da aplicação
+
+## Tecnologias
+
+- Java 25
+- Spring Boot 4.0.2
+- Spring Web MVC
+- Lombok
+- Jackson
+- SpringDoc OpenAPI (Swagger)
+- Docker & Docker Compose```bash
 docker build -t weather-api-consuming .
 docker run -p 8080:8080 weather-api-consuming
 ```
